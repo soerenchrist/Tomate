@@ -37,13 +37,33 @@ public class SettingsService
         }
     }
 
+    public void UpdateSettings(Settings settings)
+    {
+        if (!_fileSystem.File.Exists(_settingsFilePath))
+        {
+            CreateFile();
+        }
+
+        WriteSettingsToFile(settings);
+    }
+
     private void WriteSettingsToFile(Settings newSettings)
     {
         var newSettingsJson = JsonSerializer.Serialize(newSettings);
-        _fileSystem.File.WriteAllText(_settingsFilePath, newSettingsJson);  
+        _fileSystem.File.WriteAllText(_settingsFilePath, newSettingsJson);
     }
 
     private Settings CreateDefaultSettingsFile()
+    {
+        CreateFile();
+
+        var defaultSettings = new Settings();
+        var defaultSettingsJson = JsonSerializer.Serialize(defaultSettings);
+        _fileSystem.File.WriteAllText(_settingsFilePath, defaultSettingsJson);
+        return defaultSettings;
+    }
+
+    private void CreateFile()
     {
         var directory = _fileSystem.Path.GetDirectoryName(_settingsFilePath);
         if (directory == null) throw new Exception("Could not get directory from settings file path.");
@@ -53,10 +73,5 @@ public class SettingsService
         }
 
         _fileSystem.File.Create(_settingsFilePath);
-
-        var defaultSettings = new Settings();
-        var defaultSettingsJson = JsonSerializer.Serialize(defaultSettings);
-        _fileSystem.File.WriteAllText(_settingsFilePath, defaultSettingsJson);
-        return defaultSettings;
     }
 }

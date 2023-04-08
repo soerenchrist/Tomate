@@ -86,6 +86,45 @@ public class SettingsServiceTests
             .BeEquivalentTo(JsonSerializer.Serialize(defaultSettings));
     }
 
+    [Fact]
+    public void UpdateSettings_WhenFileDoesNotExist_FileShouldBeCreated()
+    {
+        var fileSystem = new MockFileSystem();
+        var cut = new SettingsService(SettingsFilePath, fileSystem);
+        var settings = CreateValidSettings();
+
+        cut.UpdateSettings(settings);
+
+        fileSystem.GetFile(SettingsFilePath).Should().NotBeNull();
+    }
+
+    [Fact]
+    public void UpdateSettings_WhenFileDoesNotExist_FileShouldContainSettings()
+    {
+        var fileSystem = new MockFileSystem();
+        var cut = new SettingsService(SettingsFilePath, fileSystem);
+        var settings = CreateValidSettings();
+
+        cut.UpdateSettings(settings);
+
+        fileSystem.GetFile(SettingsFilePath).TextContents.Should().BeEquivalentTo(JsonSerializer.Serialize(settings));
+    }
+
+    [Fact]
+    public void UpdateSettings_WhenFileExists_FileIsOverriden()
+    {
+        var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        {
+            { SettingsFilePath, JsonSerializer.Serialize(new Settings()) }
+        });
+        var cut = new SettingsService(SettingsFilePath, fileSystem);
+        var settings = CreateValidSettings();
+
+        cut.UpdateSettings(settings);
+
+        fileSystem.GetFile(SettingsFilePath).TextContents.Should().BeEquivalentTo(JsonSerializer.Serialize(settings));
+    }
+
     private Settings CreateValidSettings()
     {
         return new Settings
