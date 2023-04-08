@@ -1,7 +1,5 @@
-using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Text.Json;
-using NSubstitute;
 using Tomate.Models;
 using Tomate.Services;
 
@@ -93,7 +91,7 @@ public class SettingsServiceTests
         var cut = new SettingsService(SettingsFilePath, fileSystem);
         var settings = CreateValidSettings();
 
-        cut.UpdateSettings(settings);
+        cut.UpdateGlobalSettings(settings);
 
         fileSystem.GetFile(SettingsFilePath).Should().NotBeNull();
     }
@@ -105,7 +103,7 @@ public class SettingsServiceTests
         var cut = new SettingsService(SettingsFilePath, fileSystem);
         var settings = CreateValidSettings();
 
-        cut.UpdateSettings(settings);
+        cut.UpdateGlobalSettings(settings);
 
         fileSystem.GetFile(SettingsFilePath).TextContents.Should().BeEquivalentTo(JsonSerializer.Serialize(settings));
     }
@@ -120,7 +118,7 @@ public class SettingsServiceTests
         var cut = new SettingsService(SettingsFilePath, fileSystem);
         var settings = CreateValidSettings();
 
-        cut.UpdateSettings(settings);
+        cut.UpdateGlobalSettings(settings);
 
         fileSystem.GetFile(SettingsFilePath).TextContents.Should().BeEquivalentTo(JsonSerializer.Serialize(settings));
     }

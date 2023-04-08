@@ -1,10 +1,11 @@
 using System.IO.Abstractions;
 using System.Text.Json;
 using Tomate.Models;
+using Tomate.Services.Abstractions;
 
 namespace Tomate.Services;
 
-public class SettingsService
+public class SettingsService : ISettingsService
 {
     private readonly string _settingsFilePath;
     private readonly IFileSystem _fileSystem;
@@ -37,7 +38,7 @@ public class SettingsService
         }
     }
 
-    public void UpdateSettings(Settings settings)
+    public void UpdateGlobalSettings(Settings settings)
     {
         if (!_fileSystem.File.Exists(_settingsFilePath))
         {
