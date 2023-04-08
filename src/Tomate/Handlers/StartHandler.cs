@@ -48,14 +48,8 @@ public class StartHandler : IAsyncHandler<StartArgs>
     {
         for (var cycle = 0; cycle < settings.Cycles; cycle++)
         {
-            for (var interval = 0; interval < settings.LongBreakInterval; interval++)
-            {
-                await PerformFocusTime(settings, cancellationToken);
-                await PerformShortBreak(settings, cancellationToken);
-            }
-
-            await PerformFocusTime(settings, cancellationToken);
-            await PerformLongBreak(settings, cancellationToken);
+            _notifyService.NotifyStartOfCycle(cycle, settings.Cycles);
+            await HandleSingleCycle(settings, cancellationToken);
         }
     }
 
@@ -73,6 +67,7 @@ public class StartHandler : IAsyncHandler<StartArgs>
 
     private async Task PerformFocusTime(Settings settings, CancellationToken cancellationToken)
     {
+        _notifyService.NotifyStartOfFocusTime();
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.FocusMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
@@ -83,6 +78,7 @@ public class StartHandler : IAsyncHandler<StartArgs>
 
     private async Task PerformShortBreak(Settings settings, CancellationToken cancellationToken)
     {
+        _notifyService.NotifyStartOfBreakTime();
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.ShortBreakMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
@@ -93,6 +89,7 @@ public class StartHandler : IAsyncHandler<StartArgs>
 
     private async Task PerformLongBreak(Settings settings, CancellationToken cancellationToken)
     {
+        _notifyService.NotifyStartOfBreakTime();
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.LongBreakMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
