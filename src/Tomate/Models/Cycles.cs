@@ -2,27 +2,28 @@ using System.Text.Json.Serialization;
 
 namespace Tomate.Models;
 
-public struct Count
+public struct Cycles
 {
+    public static Cycles Infinite = new Cycles(0);
     public int Value { get; }
 
     [JsonConstructor]
-    public Count(int value)
+    public Cycles(int value)
     {
-        if (value < 1)
+        if (value < 0)
             throw new ArgumentOutOfRangeException(nameof(value),
-                "Count must be greater than or equal to one.");
+                "Cycles must be greater than or equal to 0.");
         Value = value;
     }
 
-    public static implicit operator Count(int value) => new Count(value);
-    public static implicit operator int(Count count) => count.Value;
+    public static implicit operator Cycles(int value) => new Cycles(value);
+    public static implicit operator int(Cycles count) => count.Value;
 
     public override string ToString() => $"{Value.ToString()} times";
 
     public override bool Equals(object? obj)
     {
-        if (obj is Count count)
+        if (obj is Cycles count)
         {
             return Value == count.Value;
         }
@@ -30,7 +31,7 @@ public struct Count
         return false;
     }
 
-    public bool Equals(Count other)
+    public bool Equals(Cycles other)
     {
         return Value == other.Value;
     }

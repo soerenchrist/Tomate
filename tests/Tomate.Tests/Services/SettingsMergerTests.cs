@@ -22,6 +22,7 @@ public class SettingsMergerTests
             LongBreakInterval = 3,
             LongBreakMinutes = 20,
             ShortBreakMinutes = 4,
+            Cycles = Cycles.Infinite
         };
         var startArgs = new StartArgs();
 
@@ -39,6 +40,7 @@ public class SettingsMergerTests
             LongBreakInterval = 3,
             LongBreakMinutes = 20,
             ShortBreakMinutes = 4,
+            Cycles = Cycles.Infinite
         };
         var startArgs = new StartArgs
         {
@@ -53,6 +55,7 @@ public class SettingsMergerTests
             LongBreakInterval = 3,
             LongBreakMinutes = 20,
             ShortBreakMinutes = 4,
+            Cycles = Cycles.Infinite
         });
     }
 
@@ -65,6 +68,7 @@ public class SettingsMergerTests
             LongBreakInterval = 3,
             LongBreakMinutes = 20,
             ShortBreakMinutes = 4,
+            Cycles = 3
         };
         var startArgs = new StartArgs
         {
@@ -72,6 +76,7 @@ public class SettingsMergerTests
             LongBreakInterval = 6,
             LongBreakMinutes = 40,
             ShortBreakMinutes = 8,
+            Cycles = 0
         };
 
         var mergedSettings = this.cut.MergeGlobalAndLocalSettings(globalSettings, startArgs);
@@ -82,6 +87,7 @@ public class SettingsMergerTests
             LongBreakInterval = 6,
             LongBreakMinutes = 40,
             ShortBreakMinutes = 8,
+            Cycles = 0
         });
     }
 }

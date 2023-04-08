@@ -9,9 +9,9 @@ public struct Minutes
     [JsonConstructor]
     public Minutes(int value)
     {
-        if (value < 1)
+        if (value < 0)
             throw new ArgumentOutOfRangeException(nameof(value),
-                "Number of minutes must be greater than or equal to one.");
+                "Number of minutes must be greater than or equal to zero.");
         Value = value;
     }
 

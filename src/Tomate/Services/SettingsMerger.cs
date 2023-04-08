@@ -13,6 +13,7 @@ public class SettingsMerger
             ShortBreakMinutes = startArgs.ShortBreakMinutes ?? globalSettings.ShortBreakMinutes,
             LongBreakMinutes = startArgs.LongBreakMinutes ?? globalSettings.LongBreakMinutes,
             LongBreakInterval = startArgs.LongBreakInterval ?? globalSettings.LongBreakInterval,
+            Cycles = startArgs.Cycles ?? globalSettings.Cycles
         };
         return mergedSettings;
     }

@@ -13,11 +13,11 @@ RegisterServices(services);
 
 var provider = services.BuildServiceProvider();
 
-var result = Parser.Default.ParseArguments<StartArgs, ConfigArgs>(args)
+var result = await Parser.Default.ParseArguments<StartArgs, ConfigArgs>(args)
     .MapResult(
-        (StartArgs startArgs) => provider.GetRequiredService<IHandler<StartArgs>>().Handle(startArgs),
-        (ConfigArgs configArgs) => provider.GetRequiredService<IHandler<ConfigArgs>>().Handle(configArgs),
-        _ => 1
+        (StartArgs startArgs) => provider.GetRequiredService<IAsyncHandler<StartArgs>>().HandleAsync(startArgs),
+        (ConfigArgs configArgs) => provider.GetRequiredService<IAsyncHandler<ConfigArgs>>().HandleAsync(configArgs),
+        _ => Task.FromResult(1)
     );
 
 return result;
@@ -25,7 +25,7 @@ return result;
 void RegisterHandlers(IServiceCollection serviceCollection)
 {
     // Register all handlers using reflection
-    var handlerType = typeof(IHandler<>);
+    var handlerType = typeof(IAsyncHandler<>);
     var handlers = typeof(Program).Assembly.GetTypes()
         .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == handlerType))
         .ToList();
@@ -46,4 +46,7 @@ void RegisterServices(IServiceCollection serviceCollection)
 
     var settingsService = new SettingsService(configFile, new FileSystem());
     serviceCollection.AddSingleton<ISettingsService>(settingsService);
+
+    services.AddSingleton<IDelay, TaskDelay>();
+    services.AddSingleton<IScheduler, Scheduler>();
 }

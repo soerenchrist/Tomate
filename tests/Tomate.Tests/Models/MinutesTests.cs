@@ -7,7 +7,6 @@ namespace Tomate.Tests.Models;
 public class MinutesTests
 {
     [Theory]
-    [InlineData(0)]
     [InlineData(-1)]
     [InlineData(-2)]
     [InlineData(-10)]
@@ -19,6 +18,7 @@ public class MinutesTests
     }
 
     [Theory]
+    [InlineData(0)]
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(10)]

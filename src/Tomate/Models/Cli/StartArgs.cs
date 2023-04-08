@@ -17,4 +17,7 @@ public class StartArgs
     [Option('i', "long-break-interval", Required = false,
         HelpText = "Set the number of focus sessions before a long break")]
     public int? LongBreakInterval { get; set; }
+
+    [Option('c', "cycles", Required = false, HelpText = "Set the amount of cycles to run")]
+    public int? Cycles { get; set; }
 }
