@@ -1,9 +1,17 @@
 namespace Tomate.Models;
 
-public class Settings
+public record struct Settings
 {
-    public Minutes FocusMinutes { get; set; } = 25;
-    public Minutes ShortBreakMinutes { get; set; } = 5;
-    public Minutes LongBreakMinutes { get; set; } = 15;
-    public int LongBreakInterval { get; set; } = 4;
+    public Minutes FocusMinutes { get; init; } = 25;
+    public Minutes ShortBreakMinutes { get; init; } = 5;
+    public Minutes LongBreakMinutes { get; init; } = 15;
+    public Count LongBreakInterval { get; init; } = 4;
+
+    public Settings()
+    {
+        FocusMinutes = 25;
+        ShortBreakMinutes = 5;
+        LongBreakMinutes = 15;
+        LongBreakInterval = 4;
+    }
 }

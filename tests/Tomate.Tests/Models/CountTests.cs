@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Tomate.Models;
 
 namespace Tomate.Tests.Models;
@@ -54,12 +55,25 @@ public class CountTests
         var otherCount = new Count(25);
         count.Equals(otherCount).Should().BeTrue();
     }
-    
+
     [Fact]
     public void Count_OverridesEqualsSign()
     {
         var count = new Count(25);
         var otherCount = new Count(25);
         (count == otherCount).Should().BeTrue();
+    }
+
+    [Fact]
+    public void Count_CanBeDeserializedFromJson()
+    {
+        var json = """
+        {
+            "Value": 25
+        }
+        """;
+
+        var count = JsonSerializer.Deserialize<Count>(json);
+        count.Should().BeEquivalentTo(new Count(25));
     }
 }

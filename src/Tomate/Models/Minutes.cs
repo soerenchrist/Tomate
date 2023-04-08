@@ -1,15 +1,18 @@
+using System.Text.Json.Serialization;
+
 namespace Tomate.Models;
 
 public struct Minutes
 {
     public int Value { get; }
 
-    public Minutes(int numberOfMinutes)
+    [JsonConstructor]
+    public Minutes(int value)
     {
-        if (numberOfMinutes < 1)
-            throw new ArgumentOutOfRangeException(nameof(numberOfMinutes),
+        if (value < 1)
+            throw new ArgumentOutOfRangeException(nameof(value),
                 "Number of minutes must be greater than or equal to one.");
-        Value = numberOfMinutes;
+        Value = value;
     }
 
     public static implicit operator Minutes(int numberOfMinutes) => new Minutes(numberOfMinutes);

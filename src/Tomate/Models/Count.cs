@@ -1,15 +1,18 @@
+using System.Text.Json.Serialization;
+
 namespace Tomate.Models;
 
 public struct Count
 {
     public int Value { get; }
 
-    public Count(int count)
+    [JsonConstructor]
+    public Count(int value)
     {
-        if (count < 1)
-            throw new ArgumentOutOfRangeException(nameof(count),
+        if (value < 1)
+            throw new ArgumentOutOfRangeException(nameof(value),
                 "Count must be greater than or equal to one.");
-        Value = count;
+        Value = value;
     }
 
     public static implicit operator Count(int value) => new Count(value);

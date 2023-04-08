@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Tomate.Models;
 
 namespace Tomate.Tests.Models;
@@ -62,5 +63,18 @@ public class MinutesTests
         var minutes = new Minutes(25);
         var otherMinutes = new Minutes(25);
         (minutes == otherMinutes).Should().BeTrue();
+    }
+
+    [Fact]
+    public void Minutes_CanBeDeserializedFromJson()
+    {
+        var json = """
+        {
+            "Value": 25
+        }
+        """;
+        
+        var minutes = JsonSerializer.Deserialize<Minutes>(json);
+        minutes.Should().BeEquivalentTo(new Minutes(25));
     }
 }
