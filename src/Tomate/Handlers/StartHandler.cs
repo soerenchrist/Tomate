@@ -42,13 +42,14 @@ public class StartHandler : IAsyncHandler<StartArgs>
         {
             await HandleSingleCycle(settings, cancellationToken);
         }
+        // ReSharper disable once FunctionNeverReturns
     }
 
     private async Task HandleDefinite(Settings settings, CancellationToken cancellationToken)
     {
         for (var cycle = 0; cycle < settings.Cycles; cycle++)
         {
-            _notifyService.NotifyStartOfCycle(cycle, settings.Cycles);
+            await _notifyService.NotifyStartOfCycle(cycle, settings.Cycles);
             await HandleSingleCycle(settings, cancellationToken);
         }
     }
@@ -67,34 +68,34 @@ public class StartHandler : IAsyncHandler<StartArgs>
 
     private async Task PerformFocusTime(Settings settings, CancellationToken cancellationToken)
     {
-        _notifyService.NotifyStartOfFocusTime();
+        await _notifyService.NotifyStartOfFocusTime(settings.FocusMinutes);
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.FocusMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
         {
-            _notifyService.NotifyRemainingFocusTime(remainingMinute);
+            await _notifyService.NotifyRemainingFocusTime(remainingMinute);
         }
     }
 
     private async Task PerformShortBreak(Settings settings, CancellationToken cancellationToken)
     {
-        _notifyService.NotifyStartOfBreakTime();
+        await _notifyService.NotifyStartOfBreakTime(settings.ShortBreakMinutes);
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.ShortBreakMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
         {
-            _notifyService.NotifyRemainingBreakTime(remainingMinute);
+            await _notifyService.NotifyRemainingBreakTime(remainingMinute);
         }
     }
 
     private async Task PerformLongBreak(Settings settings, CancellationToken cancellationToken)
     {
-        _notifyService.NotifyStartOfBreakTime();
+        await _notifyService.NotifyStartOfBreakTime(settings.LongBreakMinutes);
         var remainingMinutes = _scheduler.ScheduleMinutes(settings.LongBreakMinutes, cancellationToken);
 
         await foreach (var remainingMinute in remainingMinutes.WithCancellation(cancellationToken))
         {
-            _notifyService.NotifyRemainingBreakTime(remainingMinute);
+            await _notifyService.NotifyRemainingBreakTime(remainingMinute);
         }
     }
 

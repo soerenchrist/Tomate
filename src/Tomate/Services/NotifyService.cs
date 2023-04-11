@@ -5,28 +5,40 @@ namespace Tomate.Services;
 
 public class NotifyService : INotifyService
 {
-    public void NotifyStartOfFocusTime()
+    private readonly INotificationService notificationService;
+
+    public NotifyService(INotificationService notificationService)
     {
+        this.notificationService = notificationService;
+    }
+
+    public async Task NotifyStartOfFocusTime(Minutes minutes)
+    {
+        await this.notificationService.ShowNotificationAsync("Go back to work!", $"Work for {minutes}...");
         Console.WriteLine("Starting focus time...");
     }
 
-    public void NotifyRemainingFocusTime(Minutes minutes)
+    public Task NotifyRemainingFocusTime(Minutes minutes)
     {
         Console.WriteLine($"Remaining focus time: {minutes}");
+        return Task.CompletedTask;
     }
 
-    public void NotifyStartOfBreakTime()
+    public async Task NotifyStartOfBreakTime(Minutes minutes)
     {
+        await this.notificationService.ShowNotificationAsync("Take a break!", $"Have a break of {minutes}...");
         Console.WriteLine("Take a break...");
     }
 
-    public void NotifyRemainingBreakTime(Minutes minutes)
+    public Task NotifyRemainingBreakTime(Minutes minutes)
     {
         Console.WriteLine($"Remaining break time: {minutes}");
+        return Task.CompletedTask;
     }
 
-    public void NotifyStartOfCycle(Cycles current, Cycles total)
+    public Task NotifyStartOfCycle(Cycles current, Cycles total)
     {
         Console.WriteLine("Starting a new pomodoro cycle...");
+        return Task.CompletedTask;
     }
 }

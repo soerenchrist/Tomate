@@ -4,10 +4,9 @@ namespace Tomate.Services.Abstractions;
 
 public interface INotifyService
 {
-    void NotifyStartOfFocusTime();
-    void NotifyRemainingFocusTime(Minutes minutes);
-    void NotifyStartOfBreakTime();
-    void NotifyRemainingBreakTime(Minutes minutes);
-    void NotifyStartOfCycle(Cycles current, Cycles total);
-    
+    Task NotifyStartOfFocusTime(Minutes minutes);
+    Task NotifyRemainingFocusTime(Minutes minutes);
+    Task NotifyStartOfBreakTime(Minutes minutes);
+    Task NotifyRemainingBreakTime(Minutes minutes);
+    Task NotifyStartOfCycle(Cycles current, Cycles total);
 }

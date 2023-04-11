@@ -1,10 +1,13 @@
 ﻿using System.IO.Abstractions;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
+using Tmds.DBus;
 using Tomate.Handlers;
 using Tomate.Models.Cli;
 using Tomate.Services;
 using Tomate.Services.Abstractions;
+using Tomate.Services.Notifications;
+
 
 var services = new ServiceCollection();
 
@@ -53,4 +56,7 @@ void RegisterServices(IServiceCollection serviceCollection)
     services.AddSingleton<IScheduler, Scheduler>();
     services.AddSingleton<INotifyService, NotifyService>();
     services.AddSingleton<IOutput, Output>();
+#if LINUX
+    serviceCollection.AddSingleton<INotificationService, LinuxNotificationService>();
+#endif
 }
