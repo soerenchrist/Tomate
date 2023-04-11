@@ -13,10 +13,12 @@ RegisterServices(services);
 
 var provider = services.BuildServiceProvider();
 
-var result = await Parser.Default.ParseArguments<StartArgs, ConfigArgs>(args)
+var result = await Parser.Default.ParseArguments<StartArgs, ConfigArgs, ListConfigArgs>(args)
     .MapResult(
         (StartArgs startArgs) => provider.GetRequiredService<IAsyncHandler<StartArgs>>().HandleAsync(startArgs),
         (ConfigArgs configArgs) => provider.GetRequiredService<IAsyncHandler<ConfigArgs>>().HandleAsync(configArgs),
+        (ListConfigArgs configArgs) =>
+            provider.GetRequiredService<IAsyncHandler<ListConfigArgs>>().HandleAsync(configArgs),
         _ => Task.FromResult(1)
     );
 
