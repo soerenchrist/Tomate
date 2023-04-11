@@ -50,4 +50,5 @@ void RegisterServices(IServiceCollection serviceCollection)
     services.AddSingleton<IDelay, TaskDelay>();
     services.AddSingleton<IScheduler, Scheduler>();
     services.AddSingleton<INotifyService, NotifyService>();
+    services.AddSingleton<IOutput, Output>();
 }

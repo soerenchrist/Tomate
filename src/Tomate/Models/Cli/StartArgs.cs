@@ -3,7 +3,7 @@ using CommandLine;
 namespace Tomate.Models.Cli;
 
 [Verb("start", HelpText = "Start a new pomodoro session")]
-public class StartArgs
+public class StartArgs : ISettings
 {
     [Option('f', "focus-minutes", Required = false, HelpText = "Set the length of your focus time in minutes")]
     public int? FocusMinutes { get; set; }
