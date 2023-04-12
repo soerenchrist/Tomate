@@ -13,13 +13,8 @@
         <PackageReference Include="CommandLineParser" Version="2.9.1"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
         <PackageReference Include="TestableIO.System.IO.Abstractions" Version="19.2.4"/>
+        <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="19.2.4"/>
         <PackageReference Include="Tmds.DBus" Version="0.14.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="TestableIO.System.IO.Abstractions.Wrappers">
-            <HintPath>..\..\..\..\.nuget\packages\testableio.system.io.abstractions.wrappers\19.2.4\lib\net7.0\TestableIO.System.IO.Abstractions.Wrappers.dll</HintPath>
-        </Reference>
     </ItemGroup>
 
 </Project>

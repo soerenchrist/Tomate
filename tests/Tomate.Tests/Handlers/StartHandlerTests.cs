@@ -32,7 +32,7 @@ public class StartHandlerTests
     {
         await cut.HandleAsync(new StartArgs(), cts.Token);
 
-        notifyService.Received(50).NotifyRemainingFocusTime(Arg.Any<Minutes>());
+        await notifyService.Received(50).NotifyRemainingFocusTime(Arg.Any<Minutes>());
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class StartHandlerTests
         {
             FocusMinutes = 10
         }, cts.Token);
-        notifyService.Received(20).NotifyRemainingFocusTime(Arg.Any<Minutes>());
+        await notifyService.Received(20).NotifyRemainingFocusTime(Arg.Any<Minutes>());
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class StartHandlerTests
         {
             LongBreakInterval = intervalsPerCycle
         }, cts.Token);
-        notifyService.Received(expectedAmountOfFocusTimes).NotifyRemainingFocusTime(Arg.Any<Minutes>());
+        await notifyService.Received(expectedAmountOfFocusTimes).NotifyRemainingFocusTime(Arg.Any<Minutes>());
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class StartHandlerTests
             LongBreakMinutes = longBreakMinutes,
             LongBreakInterval = intervalsPerCycle
         }, cts.Token);
-        notifyService.Received(expectedAmountOfBreakTimes).NotifyRemainingBreakTime(Arg.Any<Minutes>());
+        await notifyService.Received(expectedAmountOfBreakTimes).NotifyRemainingBreakTime(Arg.Any<Minutes>());
     }
 
     [Fact]

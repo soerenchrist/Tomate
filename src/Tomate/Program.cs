@@ -1,7 +1,6 @@
 ﻿using System.IO.Abstractions;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
-using Tmds.DBus;
 using Tomate.Handlers;
 using Tomate.Models.Cli;
 using Tomate.Services;

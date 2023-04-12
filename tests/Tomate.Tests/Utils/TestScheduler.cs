@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Tomate.Models;
 using Tomate.Services.Abstractions;
 
@@ -5,7 +6,7 @@ namespace Tomate.Tests.Utils;
 
 public class TestScheduler : IScheduler
 {
-    public async IAsyncEnumerable<Minutes> ScheduleMinutes(Minutes minutes, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<Minutes> ScheduleMinutes(Minutes minutes, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var remainingMinutes = minutes;
         while (remainingMinutes > 0)
