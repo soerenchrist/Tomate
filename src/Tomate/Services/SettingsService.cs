@@ -18,53 +18,53 @@ public class SettingsService : ISettingsService
 
     public Settings ReadGlobalSettings()
     {
-        if (!_fileSystem.File.Exists(_settingsFilePath))
-        {
-            return CreateDefaultSettingsFile();
-        }
+        using var fileStream = CreateOrOpenFileStream();
+        using var streamReader = new StreamReader(fileStream);
 
-        var settingsJson = _fileSystem.File.ReadAllText(_settingsFilePath);
         try
         {
-            var settings = JsonSerializer.Deserialize<Settings>(settingsJson);
+            var content = streamReader.ReadToEnd();
+            var settings = JsonSerializer.Deserialize<Settings>(content);
 
             return settings;
         }
         catch (JsonException)
         {
             var newSettings = new Settings();
-            WriteSettingsToFile(newSettings);
+            
+            WriteSettingsToFile(fileStream, newSettings);
             return newSettings;
         }
     }
 
     public void UpdateGlobalSettings(Settings settings)
     {
-        if (!_fileSystem.File.Exists(_settingsFilePath))
-        {
-            CreateFile();
-        }
+        using var stream = CreateOrOpenFileStream();
 
-        WriteSettingsToFile(settings);
+        WriteSettingsToFile(stream, settings);
     }
 
-    private void WriteSettingsToFile(Settings newSettings)
+    private void WriteSettingsToFile(Stream stream, Settings newSettings)
     {
+        using var streamWriter = new StreamWriter(stream);
+        stream.SetLength(0);
         var newSettingsJson = JsonSerializer.Serialize(newSettings);
-        _fileSystem.File.WriteAllText(_settingsFilePath, newSettingsJson);
+        streamWriter.Write(newSettingsJson);
     }
 
     private Settings CreateDefaultSettingsFile()
     {
-        CreateFile();
+        using var stream = CreateOrOpenFileStream();
+        using var streamWriter = new StreamWriter(stream);
 
         var defaultSettings = new Settings();
         var defaultSettingsJson = JsonSerializer.Serialize(defaultSettings);
-        _fileSystem.File.WriteAllText(_settingsFilePath, defaultSettingsJson);
+
+        streamWriter.Write(defaultSettingsJson);
         return defaultSettings;
     }
 
-    private void CreateFile()
+    private Stream CreateOrOpenFileStream()
     {
         var directory = _fileSystem.Path.GetDirectoryName(_settingsFilePath);
         if (directory == null) throw new Exception("Could not get directory from settings file path.");
@@ -73,6 +73,6 @@ public class SettingsService : ISettingsService
             _fileSystem.Directory.CreateDirectory(directory);
         }
 
-        _fileSystem.File.Create(_settingsFilePath);
+        return this._fileSystem.FileInfo.New(_settingsFilePath).Open(FileMode.OpenOrCreate, FileAccess.ReadWrite);
     }
 }
