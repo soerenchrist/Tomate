@@ -5,6 +5,9 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>tomate</ToolCommandName>
+        <PackageOutputPath>../../nupkg</PackageOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
         <DefineConstants>LINUX</DefineConstants>
