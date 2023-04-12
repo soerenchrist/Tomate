@@ -41,9 +41,9 @@ jobs:
           path: nupkg
       - uses: actions/upload-artifact@v3
         with:
-          name: publish
-          path: src/Tomate.Exe/bin/Release/net7.0/linux-x64/publish
+          name: Tomate
+          path: src/Tomate.Exe/bin/Release/net7.0/linux-x64/publish/Tomate
       - uses: actions/upload-artifact@v3
         with:
-          name: publish
-          path: src/Tomate.Exe/bin/Release/net7.0/win-x64/publish
+          name: Tomate.exe
+          path: src/Tomate.Exe/bin/Release/net7.0-windows10.0.17763.0/win-x64/publish/Tomate.exe

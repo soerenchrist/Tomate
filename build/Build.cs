@@ -28,7 +28,7 @@ class Build : NukeBuild
     AbsolutePath ExeSourceDirectory => RootDirectory / "src" / "Tomate.Exe";
 
     AbsolutePath LinuxOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
-    AbsolutePath WinOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "win-x64" / "publish";
+    AbsolutePath WinOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0-windows10.0.17763.0" / "win-x64" / "publish";
 
     [MinVer]
     readonly MinVer MinVer;
@@ -75,7 +75,7 @@ class Build : NukeBuild
 
     Target Pack => _ => _
         .DependsOn(Test)
-        .Produces(PackagesDirectory / "*.nupkg", LinuxOutputDirectory / "*", WinOutputDirectory / "*")
+        .Produces(PackagesDirectory / "*.nupkg", LinuxOutputDirectory / "Tomate", WinOutputDirectory / "Tomate.exe")
         .Executes(() =>
         {
             Log.Information("Packing nuget package...");
@@ -96,6 +96,7 @@ class Build : NukeBuild
                     .SetConfiguration(Configuration)
                     .EnableSelfContained()
                     .EnablePublishSingleFile()
+                    .SetVersion(MinVer.MinVerVersion)
                     .SetRuntime(config.Runtime)
                     .SetFramework(config.Framwork))
                 );
