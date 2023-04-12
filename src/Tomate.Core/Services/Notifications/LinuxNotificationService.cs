@@ -9,7 +9,7 @@ public class LinuxNotificationService : INotificationService
     {
         try
         {
-            using var client = Connection.Session;
+            var client = Connection.Session;
             await client.ConnectAsync();
 
             var proxy = client.CreateProxy<IFreeDesktopNotification>("org.freedesktop.Notifications",
