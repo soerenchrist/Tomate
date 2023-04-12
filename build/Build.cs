@@ -30,8 +30,7 @@ class Build : NukeBuild
     AbsolutePath LinuxOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
     AbsolutePath WinOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0-windows10.0.17763.0" / "win-x64" / "publish";
 
-    [MinVer]
-    readonly MinVer MinVer;
+    readonly string Version = "1.0.4";
 
     [Solution]
     readonly Solution Solution;
@@ -79,13 +78,13 @@ class Build : NukeBuild
         .Executes(() =>
         {
             Log.Information("Packing nuget package...");
-            Log.Information("Package version: {0}", MinVer.MinVerVersion);
+            Log.Information("Package version: {0}", Version);
             DotNetPack(s => s
                 .SetProject(ToolSourceDirectory)
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
                 .EnableNoRestore()
-                .SetVersion(MinVer.MinVerVersion));
+                .SetVersion(Version));
 
             (string Runtime, string Framwork)[] configs = new[] { ("win-x64", "net7.0-windows10.0.17763.0"), ("linux-x64", "net7.0") };
 
@@ -96,7 +95,7 @@ class Build : NukeBuild
                     .SetConfiguration(Configuration)
                     .EnableSelfContained()
                     .EnablePublishSingleFile()
-                    .SetVersion(MinVer.MinVerVersion)
+                    .SetVersion(Version)
                     .SetRuntime(config.Runtime)
                     .SetFramework(config.Framwork))
                 );
