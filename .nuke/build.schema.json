@@ -79,6 +79,7 @@
               "Clean",
               "Compile",
               "Pack",
+              "Print",
               "Push",
               "Restore",
               "Test"
@@ -98,6 +99,7 @@
               "Clean",
               "Compile",
               "Pack",
+              "Print",
               "Push",
               "Restore",
               "Test"

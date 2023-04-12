@@ -1,4 +1,5 @@
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.Tools.MinVer;
 
 [GitHubActions("ci", GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
@@ -20,6 +21,9 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     AbsolutePath PackagesDirectory => RootDirectory / "nupkg";
+
+    [MinVer]
+    readonly MinVer MinVer;
 
     [Solution]
     readonly Solution Solution;
@@ -66,11 +70,13 @@ class Build : NukeBuild
         .Produces(PackagesDirectory / "*.nupkg")
         .Executes(() =>
         {
+            Log.Information("Package version: {0}", MinVer.MinVerVersion);
             DotNetPack(s => s
                 .SetProject(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
-                .EnableNoRestore());
+                .EnableNoRestore()
+                .SetVersion(MinVer.MinVerVersion));
         });
 
     Target Push => _ => _
