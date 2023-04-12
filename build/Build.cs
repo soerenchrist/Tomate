@@ -1,10 +1,13 @@
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Tools.MinVer;
 
-[GitHubActions("ci", GitHubActionsImage.UbuntuLatest,
-    On = new[] { GitHubActionsTrigger.Push },
+[GitHubActions("publish", GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.WorkflowDispatch, GitHubActionsTrigger.Push },
     ImportSecrets = new[] { nameof(NugetApiKey) },
     InvokedTargets = new[] { nameof(Push) })]
+[GitHubActions("build", GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.WorkflowDispatch, GitHubActionsTrigger.PullRequest },
+    InvokedTargets = new[] { nameof(Test) })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -89,6 +92,7 @@ class Build : NukeBuild
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetApiKey(NugetApiKey)
+                    .EnableSkipDuplicate()
                     .SetSource("https://api.nuget.org/v3/index.json")));
         });
 
