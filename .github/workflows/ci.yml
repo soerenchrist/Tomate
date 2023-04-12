@@ -31,7 +31,11 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd Test'
-        run: ./build.cmd Test
+      - name: Run './build.cmd Push'
+        run: ./build.cmd Push
         env:
           NugetApiKey: ${{ secrets.NUGET_API_KEY }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: nupkg
+          path: nupkg

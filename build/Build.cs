@@ -5,7 +5,7 @@ using Nuke.Common.Tools.MinVer;
 [GitHubActions("ci", GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
     ImportSecrets = new[] { nameof(NugetApiKey) },
-    InvokedTargets = new[] { nameof(Test) })]
+    InvokedTargets = new[] { nameof(Push) })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
