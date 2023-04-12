@@ -9,10 +9,8 @@ public class WindowsNotificationService : INotificationService
     {
 #if WINDOWS
         new ToastContentBuilder()
-    .AddArgument("action", "viewConversation")
-    .AddArgument("conversationId", 9813)
-    .AddText("Andrew sent you a picture")
-    .AddText("Check this out, The Enchantments in Washington!")
+    .AddText(title)
+    .AddText(message)
     .Show();
 #endif
 
