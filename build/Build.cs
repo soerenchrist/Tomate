@@ -24,6 +24,10 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     AbsolutePath PackagesDirectory => RootDirectory / "nupkg";
+    AbsolutePath SourceDirectory => RootDirectory / "src" / "Tomate";
+
+    AbsolutePath LinuxOutputDirectory => SourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
+    AbsolutePath WinOutputDirectory => SourceDirectory / "bin" / Configuration / "net7.0" / "win-x64" / "publish";
 
     [MinVer]
     readonly MinVer MinVer;
@@ -70,9 +74,10 @@ class Build : NukeBuild
 
     Target Pack => _ => _
         .DependsOn(Test)
-        .Produces(PackagesDirectory / "*.nupkg")
+        .Produces(PackagesDirectory / "*.nupkg", LinuxOutputDirectory / "*", WinOutputDirectory / "*")
         .Executes(() =>
         {
+            Log.Information("Packing nuget package...");
             Log.Information("Package version: {0}", MinVer.MinVerVersion);
             DotNetPack(s => s
                 .SetProject(Solution)
@@ -80,6 +85,18 @@ class Build : NukeBuild
                 .EnableNoBuild()
                 .EnableNoRestore()
                 .SetVersion(MinVer.MinVerVersion));
+
+            var runtimes = new[] { "win-x64", "linux-x64" };
+
+            Log.Information($"Create executables for {string.Join(',', runtimes)}...");
+            runtimes.ForEach(runtime =>
+                DotNetPublish(s => s
+                    .SetProject(SourceDirectory)
+                    .SetConfiguration(Configuration)
+                    .EnableSelfContained()
+                    .EnablePublishSingleFile()
+                    .SetRuntime(runtime))
+                );
         });
 
     Target Push => _ => _
