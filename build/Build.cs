@@ -25,8 +25,6 @@ class Build : NukeBuild
 
     [Solution]
     readonly Solution Solution;
-    [GitVersion]
-    readonly GitVersion GitVersion;
 
     Target Clean => _ => _
         .Before(Restore)
@@ -70,13 +68,11 @@ class Build : NukeBuild
         .Produces(PackagesDirectory / "*.nupkg")
         .Executes(() =>
         {
-            Log.Information("Version: {0}", GitVersion.MajorMinorPatch);
             DotNetPack(s => s
                 .SetProject(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
-                .EnableNoRestore()
-                .SetVersion(GitVersion.MajorMinorPatch));
+                .EnableNoRestore());
         });
 
     Target Push => _ => _
