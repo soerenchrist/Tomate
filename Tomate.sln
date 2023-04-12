@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tomate", "src\Tomate\Tomate.csproj", "{403994AC-DE27-4364-887E-867C7E391E1C}"
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomate.Core", "src\Tomate.Core\Tomate.Core.csproj", "{403994AC-DE27-4364-887E-867C7E391E1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{315C5BC8-6126-40D1-BF5C-01923930511A}"
 EndProject
@@ -9,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomate.Tests", "tests\Tomate.Tests\Tomate.Tests.csproj", "{6C239A17-DB75-4A22-8BB2-45E3094A1693}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{0F7C7D85-3A3E-4CC7-BD0D-8AFAD799A4DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomate.Tool", "src\Tomate.Tool\Tomate.Tool.csproj", "{334557B5-DEC4-4AC3-9D54-B08FBAA902BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomate.Exe", "src\Tomate.Exe\Tomate.Exe.csproj", "{FAB1560F-AD77-4528-B46A-1F25F84067F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +31,19 @@ Global
 		{6C239A17-DB75-4A22-8BB2-45E3094A1693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C239A17-DB75-4A22-8BB2-45E3094A1693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C239A17-DB75-4A22-8BB2-45E3094A1693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334557B5-DEC4-4AC3-9D54-B08FBAA902BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334557B5-DEC4-4AC3-9D54-B08FBAA902BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334557B5-DEC4-4AC3-9D54-B08FBAA902BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334557B5-DEC4-4AC3-9D54-B08FBAA902BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB1560F-AD77-4528-B46A-1F25F84067F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB1560F-AD77-4528-B46A-1F25F84067F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB1560F-AD77-4528-B46A-1F25F84067F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB1560F-AD77-4528-B46A-1F25F84067F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{403994AC-DE27-4364-887E-867C7E391E1C} = {315C5BC8-6126-40D1-BF5C-01923930511A}
 		{6C239A17-DB75-4A22-8BB2-45E3094A1693} = {00E0EA3C-9579-44A0-B543-F1679C274DE1}
+		{334557B5-DEC4-4AC3-9D54-B08FBAA902BB} = {315C5BC8-6126-40D1-BF5C-01923930511A}
+		{FAB1560F-AD77-4528-B46A-1F25F84067F7} = {315C5BC8-6126-40D1-BF5C-01923930511A}
 	EndGlobalSection
 EndGlobal

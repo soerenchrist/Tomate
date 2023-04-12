@@ -39,3 +39,11 @@ jobs:
         with:
           name: nupkg
           path: nupkg
+      - uses: actions/upload-artifact@v3
+        with:
+          name: publish
+          path: src/Tomate.Exe/bin/Release/net7.0/linux-x64/publish
+      - uses: actions/upload-artifact@v3
+        with:
+          name: publish
+          path: src/Tomate.Exe/bin/Release/net7.0/win-x64/publish

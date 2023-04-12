@@ -24,10 +24,11 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     AbsolutePath PackagesDirectory => RootDirectory / "nupkg";
-    AbsolutePath SourceDirectory => RootDirectory / "src" / "Tomate";
+    AbsolutePath ToolSourceDirectory => RootDirectory / "src" / "Tomate.Tool";
+    AbsolutePath ExeSourceDirectory => RootDirectory / "src" / "Tomate.Exe";
 
-    AbsolutePath LinuxOutputDirectory => SourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
-    AbsolutePath WinOutputDirectory => SourceDirectory / "bin" / Configuration / "net7.0" / "win-x64" / "publish";
+    AbsolutePath LinuxOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
+    AbsolutePath WinOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "win-x64" / "publish";
 
     [MinVer]
     readonly MinVer MinVer;
@@ -80,22 +81,23 @@ class Build : NukeBuild
             Log.Information("Packing nuget package...");
             Log.Information("Package version: {0}", MinVer.MinVerVersion);
             DotNetPack(s => s
-                .SetProject(Solution)
+                .SetProject(ToolSourceDirectory)
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
                 .EnableNoRestore()
                 .SetVersion(MinVer.MinVerVersion));
 
-            var runtimes = new[] { "win-x64", "linux-x64" };
+            (string Runtime, string Framwork)[] configs = new[] { ("win-x64", "net7.0-windows10.0.17763.0"), ("linux-x64", "net7.0") };
 
-            Log.Information($"Create executables for {string.Join(',', runtimes)}...");
-            runtimes.ForEach(runtime =>
+            Log.Information($"Create executables...");
+            configs.ForEach(config =>
                 DotNetPublish(s => s
-                    .SetProject(SourceDirectory)
+                    .SetProject(ExeSourceDirectory)
                     .SetConfiguration(Configuration)
                     .EnableSelfContained()
                     .EnablePublishSingleFile()
-                    .SetRuntime(runtime))
+                    .SetRuntime(config.Runtime)
+                    .SetFramework(config.Framwork))
                 );
         });
 
