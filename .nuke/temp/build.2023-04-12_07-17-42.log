@@ -1,0 +1,145 @@
+V |                      | ArgumentsFromParametersFile.OnBuildCreated (150)
+V |                      | Passing value for Build.Solution (Tomate.sln)
+V |                      | InjectParameterValues.OnBuildCreated (100)
+V |                      | HandleShellCompletion.OnBuildCreated (75)
+V |                      | GenerateBuildServerConfigurations.OnBuildCreated (50)
+V |                      | InvokeBuildServerConfigurationGeneration.OnBuildCreated (45)
+V |                      | UpdateNotification.OnBuildCreated (10)
+V |                      | UnsetVisualStudioEnvironmentVariables.OnBuildCreated (0)
+V |                      | HandleVisualStudioDebugging.OnBuildCreated (0)
+V |                      | HandleSingleFileExecution.OnBuildCreated (-50)
+V |                      | EventInvoker.OnBuildCreated (-3.4028235E+38)
+V |                      | HandleHelpRequests.OnBuildInitialized (5)
+V |                      | Telemetry.OnBuildInitialized (0)
+V |                      | Sending BuildStarted telemetry event ...
+V |                      |   build_components         = 
+V |                      |   build_type               = Project
+V |                      |   compile_time             = 4
+V |                      |   config_generators        = 
+V |                      |   host                     = VSCode
+V |                      |   num_custom_components    = 0
+V |                      |   num_custom_extensions    = 0
+V |                      |   num_partitioned_targets  = 0
+V |                      |   num_secrets              = 0
+V |                      |   num_targets              = 4
+V |                      |   os_architecture          = X64
+V |                      |   os_platform              = Linux
+V |                      |   repo_branch              = main
+V |                      |   repo_commit              = fec0c2
+V |                      |   repo_provider            = GitHub
+V |                      |   repo_url                 = 5408e1
+V |                      |   target_framework         = .NETCoreApp,Version=v7.0
+V |                      |   version_dotnet_sdk       = 7.0.202
+V |                      |   version_nuke_common      = 6.3.0
+V |                      |   version_nuke_global_tool = 6.3.0
+V |                      | InjectNonParameterValues.OnBuildInitialized (-100)
+V |                      | EventInvoker.OnBuildInitialized (-3.4028235E+38)
+V | Restore              | EventInvoker.OnTargetRunning (-3.4028235E+38)
+I | Restore              | > /home/codespace/.dotnet/dotnet restore /workspaces/Tomate/Tomate.sln
+D | Restore              |   Determining projects to restore...
+D | Restore              |   All projects are up-to-date for restore.
+V | Restore              | Telemetry.OnTargetSucceeded (0)
+V | Restore              | Sending TargetSucceeded telemetry event ...
+V | Restore              |   build_components         = 
+V | Restore              |   build_type               = Project
+V | Restore              |   compile_time             = 6
+V | Restore              |   config_generators        = 
+V | Restore              |   host                     = VSCode
+V | Restore              |   num_custom_components    = 0
+V | Restore              |   num_custom_extensions    = 0
+V | Restore              |   num_partitioned_targets  = 0
+V | Restore              |   num_secrets              = 0
+V | Restore              |   num_targets              = 4
+V | Restore              |   os_architecture          = X64
+V | Restore              |   os_platform              = Linux
+V | Restore              |   repo_branch              = main
+V | Restore              |   repo_commit              = fec0c2
+V | Restore              |   repo_provider            = GitHub
+V | Restore              |   repo_url                 = 5408e1
+V | Restore              |   target_current_partition = 1
+V | Restore              |   target_duration          = 1
+V | Restore              |   target_framework         = .NETCoreApp,Version=v7.0
+V | Restore              |   target_name              = Restore
+V | Restore              |   target_total_partitions  = 1
+V | Restore              |   version_dotnet_sdk       = 7.0.202
+V | Restore              |   version_nuke_common      = 6.3.0
+V | Restore              |   version_nuke_global_tool = 6.3.0
+V | Restore              | EventInvoker.OnTargetSucceeded (-3.4028235E+38)
+V | Compile              | EventInvoker.OnTargetRunning (-3.4028235E+38)
+I | Compile              | > /home/codespace/.dotnet/dotnet build /workspaces/Tomate/Tomate.sln --configuration Debug --no-restore
+D | Compile              | MSBuild version 17.5.0+6f08c67f3 for .NET
+D | Compile              |   Tomate -> /workspaces/Tomate/src/Tomate/bin/Debug/net7.0/Tomate.dll
+D | Compile              |   Tomate.Tests -> /workspaces/Tomate/tests/Tomate.Tests/bin/Debug/net7.0/Tomate.Tests.dll
+D | Compile              | 
+D | Compile              | Build succeeded.
+D | Compile              |     0 Warning(s)
+D | Compile              |     0 Error(s)
+D | Compile              | 
+D | Compile              | Time Elapsed 00:00:01.27
+V | Compile              | Telemetry.OnTargetSucceeded (0)
+V | Compile              | Sending TargetSucceeded telemetry event ...
+V | Compile              |   build_components         = 
+V | Compile              |   build_type               = Project
+V | Compile              |   compile_time             = 8
+V | Compile              |   config_generators        = 
+V | Compile              |   host                     = VSCode
+V | Compile              |   num_custom_components    = 0
+V | Compile              |   num_custom_extensions    = 0
+V | Compile              |   num_partitioned_targets  = 0
+V | Compile              |   num_secrets              = 0
+V | Compile              |   num_targets              = 4
+V | Compile              |   os_architecture          = X64
+V | Compile              |   os_platform              = Linux
+V | Compile              |   repo_branch              = main
+V | Compile              |   repo_commit              = fec0c2
+V | Compile              |   repo_provider            = GitHub
+V | Compile              |   repo_url                 = 5408e1
+V | Compile              |   target_current_partition = 1
+V | Compile              |   target_duration          = 2
+V | Compile              |   target_framework         = .NETCoreApp,Version=v7.0
+V | Compile              |   target_name              = Compile
+V | Compile              |   target_total_partitions  = 1
+V | Compile              |   version_dotnet_sdk       = 7.0.202
+V | Compile              |   version_nuke_common      = 6.3.0
+V | Compile              |   version_nuke_global_tool = 6.3.0
+V | Compile              | EventInvoker.OnTargetSucceeded (-3.4028235E+38)
+V | Test                 | EventInvoker.OnTargetRunning (-3.4028235E+38)
+I | Test                 | > /home/codespace/.dotnet/dotnet test /workspaces/Tomate/Tomate.sln --configuration Debug --no-build --no-restore
+D | Test                 | Test run for /workspaces/Tomate/tests/Tomate.Tests/bin/Debug/net7.0/Tomate.Tests.dll (.NETCoreApp,Version=v7.0)
+D | Test                 | Microsoft (R) Test Execution Command Line Tool Version 17.5.0 (x64)
+D | Test                 | Copyright (c) Microsoft Corporation.  All rights reserved.
+D | Test                 | 
+D | Test                 | Starting test execution, please wait...
+D | Test                 | A total of 1 test files matched the specified pattern.
+D | Test                 | 
+D | Test                 | Passed!  - Failed:     0, Passed:    77, Skipped:     0, Total:    77, Duration: 327 ms - Tomate.Tests.dll (net7.0)
+V | Test                 | Telemetry.OnTargetSucceeded (0)
+V | Test                 | Sending TargetSucceeded telemetry event ...
+V | Test                 |   build_components         = 
+V | Test                 |   build_type               = Project
+V | Test                 |   compile_time             = 12
+V | Test                 |   config_generators        = 
+V | Test                 |   host                     = VSCode
+V | Test                 |   num_custom_components    = 0
+V | Test                 |   num_custom_extensions    = 0
+V | Test                 |   num_partitioned_targets  = 0
+V | Test                 |   num_secrets              = 0
+V | Test                 |   num_targets              = 4
+V | Test                 |   os_architecture          = X64
+V | Test                 |   os_platform              = Linux
+V | Test                 |   repo_branch              = main
+V | Test                 |   repo_commit              = fec0c2
+V | Test                 |   repo_provider            = GitHub
+V | Test                 |   repo_url                 = 5408e1
+V | Test                 |   target_current_partition = 1
+V | Test                 |   target_duration          = 5
+V | Test                 |   target_framework         = .NETCoreApp,Version=v7.0
+V | Test                 |   target_name              = Test
+V | Test                 |   target_total_partitions  = 1
+V | Test                 |   version_dotnet_sdk       = 7.0.202
+V | Test                 |   version_nuke_common      = 6.3.0
+V | Test                 |   version_nuke_global_tool = 6.3.0
+V | Test                 | EventInvoker.OnTargetSucceeded (-3.4028235E+38)
+V |                      | UpdateNotification.OnBuildFinished (10)
+V |                      | SerializeBuildServerState.OnBuildFinished (0)
+V |                      | EventInvoker.OnBuildFinished (-3.4028235E+38)

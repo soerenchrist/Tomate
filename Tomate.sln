@@ -8,12 +8,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00E0EA3C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomate.Tests", "tests\Tomate.Tests\Tomate.Tests.csproj", "{6C239A17-DB75-4A22-8BB2-45E3094A1693}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{0F7C7D85-3A3E-4CC7-BD0D-8AFAD799A4DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F7C7D85-3A3E-4CC7-BD0D-8AFAD799A4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7C7D85-3A3E-4CC7-BD0D-8AFAD799A4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{403994AC-DE27-4364-887E-867C7E391E1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{403994AC-DE27-4364-887E-867C7E391E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{403994AC-DE27-4364-887E-867C7E391E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
