@@ -1,6 +1,4 @@
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.MinVer;
 
 [GitHubActions("ci", GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
