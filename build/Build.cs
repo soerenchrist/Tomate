@@ -9,6 +9,7 @@ using Octokit;
 [GitHubActions("publish", GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.WorkflowDispatch, GitHubActionsTrigger.Push },
     ImportSecrets = new[] { nameof(NugetApiKey) },
+    EnableGitHubToken = true,
     InvokedTargets = new[] { nameof(Push) })]
 class Build : NukeBuild
 {
@@ -37,7 +38,7 @@ class Build : NukeBuild
 
     bool PublishRelease => Repository.IsOnMainBranch() && !IsLocalBuild;
 
-    readonly string Version = "1.0.4";
+    readonly string Version = "1.0.5";
 
     [Solution]
     readonly Solution Solution;
@@ -122,7 +123,14 @@ class Build : NukeBuild
                     .EnableSkipDuplicate()
                     .SetSource("https://api.nuget.org/v3/index.json")));
 
-            CreateRelease().GetAwaiter().GetResult();
+            try
+            {
+                CreateRelease().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to create release");
+            }
         });
         
         
