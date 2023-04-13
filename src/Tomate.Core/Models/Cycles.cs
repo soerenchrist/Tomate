@@ -1,7 +1,10 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Tomate.Converters;
 
 namespace Tomate.Models;
 
+[TypeConverter(typeof(CyclesTypeConverter))]
 public struct Cycles
 {
     public static Cycles Infinite = new Cycles(0);
