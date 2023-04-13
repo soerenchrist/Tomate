@@ -1,13 +1,15 @@
+using System.IO;
+using System.Threading.Tasks;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.Git;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.MinVer;
+using Octokit;
 
 [GitHubActions("publish", GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.WorkflowDispatch, GitHubActionsTrigger.Push },
     ImportSecrets = new[] { nameof(NugetApiKey) },
     InvokedTargets = new[] { nameof(Push) })]
-[GitHubActions("build", GitHubActionsImage.UbuntuLatest,
-    On = new[] { GitHubActionsTrigger.WorkflowDispatch, GitHubActionsTrigger.PullRequest },
-    InvokedTargets = new[] { nameof(Test) })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -29,6 +31,11 @@ class Build : NukeBuild
 
     AbsolutePath LinuxOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0" / "linux-x64" / "publish";
     AbsolutePath WinOutputDirectory => ExeSourceDirectory / "bin" / Configuration / "net7.0-windows10.0.17763.0" / "win-x64" / "publish";
+
+    [GitRepository]
+    readonly GitRepository Repository;
+
+    bool PublishRelease => Repository.IsOnMainBranch() && !IsLocalBuild;
 
     readonly string Version = "1.0.4";
 
@@ -73,8 +80,8 @@ class Build : NukeBuild
         });
 
     Target Pack => _ => _
+        .OnlyWhenDynamic(() => PublishRelease)
         .DependsOn(Test)
-        .Produces(PackagesDirectory / "*.nupkg", LinuxOutputDirectory / "Tomate", WinOutputDirectory / "Tomate.exe")
         .Executes(() =>
         {
             Log.Information("Packing nuget package...");
@@ -103,6 +110,7 @@ class Build : NukeBuild
 
     Target Push => _ => _
         .DependsOn(Pack)
+        .OnlyWhenDynamic(() => PublishRelease)
         .Requires(() => NugetApiKey)
         .Executes(() =>
         {
@@ -113,6 +121,53 @@ class Build : NukeBuild
                     .SetApiKey(NugetApiKey)
                     .EnableSkipDuplicate()
                     .SetSource("https://api.nuget.org/v3/index.json")));
+
+            CreateRelease().GetAwaiter().GetResult();
         });
+        
+        
+    private async Task CreateRelease()
+    {
+        Log.Information("Creating release...");
+        GitHubActions gitHubActions = GitHubActions.Instance;
+        GitHubTasks.GitHubClient = new GitHubClient(new ProductHeaderValue("Tomate"))
+        {
+            Credentials = new Credentials(gitHubActions.Token)
+        };
+
+        var newRelease = new NewRelease(Version)
+        {
+            TargetCommitish = Repository.Commit,
+            Draft = true,
+            Name = "Tomate " + Version,
+            Prerelease = false,
+            Body = "Tomate " + Version
+        };
+        var owner = Repository.GetGitHubOwner();
+        var name = Repository.GetGitHubName();
+        var createdRelease = await GitHubTasks.GitHubClient.Repository.Release.Create(owner, name, newRelease);
+
+        var linuxFile = GlobFiles(LinuxOutputDirectory, "Tomate").First();
+        var winFile = GlobFiles(WinOutputDirectory, "Tomate.exe").First();
+
+        var linuxName = $"tomate-linux-x64-{Version}";
+        var winName = $"tomate-win-x64-{Version}.exe";
+
+        await UploadReleaseAsset(createdRelease, linuxFile, linuxName);
+        await UploadReleaseAsset(createdRelease, winFile, winName);
+
+    }
+    private async Task UploadReleaseAsset(Release release, string asset, string filename) {
+        Log.Information($"Uploading {filename}...");
+        await using var stream = File.OpenRead(asset);
+        var assetUpload = new ReleaseAssetUpload
+        {
+            FileName = filename,
+            ContentType = "application/octet-stream",
+            RawData = stream
+        };
+
+        await GitHubTasks.GitHubClient.Repository.Release.UploadAsset(release, assetUpload);
+    }
 
 }
