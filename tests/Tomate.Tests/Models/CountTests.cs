@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text.Json;
 using Tomate.Models;
 
@@ -76,5 +77,11 @@ public class CountTests
 
         var count = JsonSerializer.Deserialize<Count>(json);
         count.Should().BeEquivalentTo(new Count(25));
+    }
+
+    [Fact]
+    public void Count_ShouldHaveTypeConverterAssociated()
+    {
+        TypeDescriptor.GetConverter(typeof(Count)).Should().NotBeNull();
     }
 }

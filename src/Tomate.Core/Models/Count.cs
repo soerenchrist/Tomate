@@ -1,7 +1,10 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Tomate.Converters;
 
 namespace Tomate.Models;
 
+[TypeConverter(typeof(CountTypeConverter))]
 public struct Count
 {
     public int Value { get; }

@@ -2,9 +2,9 @@ namespace Tomate.Models.Cli;
 
 public interface ISettings
 {
-    public int? FocusMinutes { get; set; }
-    public int? ShortBreakMinutes { get; set; }
-    public int? LongBreakMinutes { get; set; }
-    public int? LongBreakInterval { get; set; }
-    public int? Cycles { get; set; }
+    public Minutes? FocusMinutes { get; set; }
+    public Minutes? ShortBreakMinutes { get; set; }
+    public Minutes? LongBreakMinutes { get; set; }
+    public Count? LongBreakInterval { get; set; }
+    public Cycles? Cycles { get; set; }
 }

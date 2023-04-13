@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text.Json;
 using Tomate.Models;
 
@@ -74,8 +75,14 @@ public class MinutesTests
             "Value": 25
         }
         """;
-        
+
         var minutes = JsonSerializer.Deserialize<Minutes>(json);
         minutes.Should().BeEquivalentTo(new Minutes(25));
+    }
+
+    [Fact]
+    public void Minutes_ShouldHaveTypeConverterAssociated()
+    {
+        TypeDescriptor.GetConverter(typeof(Minutes)).Should().NotBeNull();
     }
 }
